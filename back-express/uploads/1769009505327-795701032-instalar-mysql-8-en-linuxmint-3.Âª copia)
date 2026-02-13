@@ -1,0 +1,49 @@
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.33-1_all.deb
+
+sudo dpkg -i mysql-apt-config_0.8.33-1_all.deb
+
+    Durante la instalación:
+
+        Aparecerá un menú para elegir la versión de MySQL.
+
+        Selecciona MySQL Server 8.0 (y asegúrate de que sea la 8.0.44).
+
+        Guarda y sal (tecla Tab → OK).
+
+sudo apt update
+
+sudo apt install mysql-server
+
+sudo systemctl status mysql
+
+mysql --version
+
+sudo systemctl enable mysql
+
+
+-----------------------------
+#Habilitar conexiones remotas
+-----------------------------
+
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+    bind-address = 0.0.0.0
+
+sudo systemctl restart mysql
+
+- Crear usuario remoto, con privilegios
+sudo mysql -u root -p
+
+CREATE USER 'remoto'@'%' IDENTIFIED BY 'remoto';
+GRANT ALL PRIVILEGES ON *.* TO 'remoto'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+SELECT User, Host FROM mysql.user;
+
+
+
+- Abrir puerto en firewall
+sudo ufw allow 3306/tcp
+sudo ufw reload
+sudo ufw status
+
+

@@ -1,0 +1,2 @@
+[2026-02-02T20:16:56.083] [ERROR] error - Error Handler(400): ValidationError: categoria: Cast to ObjectId failed for value "ads" (type string) at path "categoria" because of "BSONError", valoracion: Cast to Number failed for value "asd" (type string) at path "valoracion"
+[2026-02-02T20:18:31.872] [ERROR] error - Error Handler(400): ValidationError: valoracion: Cast to Number failed for value "asd" (type string) at path "valoracion"

@@ -1,0 +1,33 @@
+Instalar Postman con Flatpak (recomendada si usas Mint 20+)
+-------------------------------------------------------------
+
+flatpak --version
+
+sudo apt install flatpak
+
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+flatpak install flathub com.getpostman.Postman
+
+flatpak run com.getpostman.Postman
+
+
+Opción 3: Instalar manualmente desde el sitio oficial
+------------------------------------------------------
+wget https://dl.pstmn.io/download/latest/linux64 -O postman.tar.gz
+
+sudo tar -xzf postman.tar.gz -C /opt
+
+sudo ln -s /opt/Postman/Postman /usr/bin/postman
+
+(Opcional) Crea un lanzador para el menú:
+cat <<EOF | sudo tee /usr/share/applications/postman.desktop
+[Desktop Entry]
+Name=Postman
+Exec=postman
+Icon=/opt/Postman/app/resources/app/assets/icon.png
+Type=Application
+Categories=Development;
+EOF
+
+

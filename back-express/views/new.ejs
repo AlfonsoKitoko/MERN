@@ -1,0 +1,21 @@
+<%- include("partials/header") %>
+  <div class="glass-container">
+    <div class="card">
+      <h1>📝 Nuevo Comentario</h1>
+      <form action="<%= baseUrlComentarios %>" method="POST" class="formulario">
+        <input type="text" placeholder="👤 Usuario..." name="usuario" required>
+        <input type="number" placeholder="Valoración..." required min="0" max="5" name="valoracion">
+        <select name="categoria">
+          <% for(let c of categorias) { %>
+            <option value="<%= c._id %>" ><%= c.nombre.toUpperCase() %></option>
+          <% } %>
+        </select>
+        <textarea name="opinion" placeholder="✍️ Escribe tu opinión..." cols="30" rows="5" required></textarea>
+        <div class="botones">
+          <input type="submit" value="Guardar" class="btn">
+          <a href="/" class="btn-secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+<%- include("partials/footer") %>

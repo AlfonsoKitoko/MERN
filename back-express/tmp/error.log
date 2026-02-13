@@ -1,0 +1,5 @@
+[2026-02-04T16:10:12.609] [ERROR] error - Error Handler(404): Error: Ruta no existente: /categorias
+[2026-02-04T16:10:12.671] [ERROR] error - Error Handler(404): Error: Ruta no existente: /favicon.ico
+[2026-02-04T16:10:17.507] [ERROR] error - Error Handler(404): Error: Ruta no existente: /categoria
+[2026-02-04T16:10:20.578] [ERROR] error - Error Handler(404): Error: Ruta no existente: /category
+[2026-02-04T16:10:26.071] [ERROR] error - Error Handler(404): Error: Ruta no existente: /categories

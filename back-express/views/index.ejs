@@ -1,0 +1,44 @@
+<%- include("partials/header") %>
+
+  <script>
+    const baseURL = '<%= baseUrlComentarios %>';
+    
+    function filtrar(){      
+      window.location.href = baseURL + "?cat=" + document.getElementById("comboCat").value
+    }
+  </script>
+
+
+  <div class="glass-container">
+    <div class="card">
+      <h1>💬 Listado de Comentarios</h1>
+      <a href="<%= baseUrlComentarios %>/new" class="btn">➕ Nuevo Comentario</a>
+      <!--<a href="<%= baseUrlTV %>" class="btn">🎬 Buscar Pelis/Series</a>-->
+      <hr>
+      <select name="categoria" id="comboCat">
+         <% for(let c of categorias) { %>
+           <option value="<%= c._id %>" ><%= c.nombre.toUpperCase() %></option>
+         <% } %>
+      </select>
+      <input type="button" value="filtrar" onclick="filtrar()"> 
+      <hr>
+      <div class="comentarios">
+        <% for (let c of comentarios) { %>
+          <div class="comentario">
+            <div class="comentario-header">
+              <div class="usuario"><b><%= c.usuario %></b></div>
+              <div class="comentario-botones">
+                <a href="<%= baseUrlComentarios %>/<%= c.id %>" title="Ver detalles">🔍</a>
+                <a href="<%= baseUrlComentarios %>/<%= c.id %>/edit" title="Editar">✏️</a>
+                <form action="<%= baseUrlComentarios %>/<%= c.id %>?_method=DELETE" method="POST" class="inline-form" title="Eliminar">
+                  <button type="submit">🗑️</button>
+                </form>
+              </div>
+            </div>
+            <p class="opinion"><%= c.opinion %></p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+<%- include("partials/footer") %>
