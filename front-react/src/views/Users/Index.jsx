@@ -1,33 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { sendRequest } from '../../utils/functions'
 
 const Index = () => {
+	const [users, setUsers] = useState([]) // Hook para guardar la lista de usuarios
 
-	const [users, setUsers] = useState([])	// hook
-
-	// JavaScript
+	// Función para obtener todos los usuarios desde el backend
 	const getUsers = async () => {
-		/* try {
-			const response = await axios.get("/users")
-			console.log(response.data)
-			setUsers(response.data)
-		} catch (error) {
-			console.log(error)
-		} */
-		const res = await sendRequest('GET', '/users')
-
-		if (res.success) setUsers(res.data)
-		else alert(res.message)
+		const res = await sendRequest('GET', '/users') // Petición GET a /users
+		if (res.success) setUsers(res.data)           // Si éxito, guardar en el estado
+		else alert(res.message)                       // Si falla, mostrar alert
 	}
 
+	// useEffect para ejecutar la petición al montar el componente
 	useEffect(() => {
 		getUsers()
-	}, [])	// Ejecuta, una única vez [], cuando se renderiza el componente
+	}, []) // [] -> solo se ejecuta una vez al renderizar
 
 	return (
 		<div>
 			<h1>Listado de Usuarios</h1>
+			{/* Tabla con todos los usuarios */}
 			<table border="1px">
 				<thead>
 					<tr>

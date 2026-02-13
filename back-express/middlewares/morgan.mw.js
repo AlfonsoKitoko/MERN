@@ -8,6 +8,14 @@ const logsActivos = process.env.LOGS_ACTIVOS
 
 exports.usingMorgan = () => {
     return morgan("combined", {
-        stream: app.get("env") === "development" && logsActivos === "true" ? fs.createWriteStream(ruta + "access.log", {flags:"a"}) : '' //append (insertar al final del archivo)
+        stream: app.get("env") === "development" && logsActivos === "true"
+            ? fs.createWriteStream(ruta + "access.log", { flags: "a" }) // append
+            : '' // en producción podría ser consola
     })
 }
+
+/*
+✅ AAA:
+- Accounting: monitorización de todas las peticiones HTTP
+- Ejemplo examen: log de método, URL, status, user-agent
+*/

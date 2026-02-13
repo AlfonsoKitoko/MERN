@@ -5,19 +5,20 @@ import { sendRequest } from "../../utils/functions"
 import { useCategoriaStore } from "../../stores/CategoriaStore"
 
 const Show = () => {
-
-	const { id } = useParams()
+	const { id } = useParams()                // Obtener ID de la URL
 	const navigate = useNavigate()
-	const categorias = useCategoriaStore(state => state.categorias)
+	const categorias = useCategoriaStore(state => state.categorias) // store de categorías
 	const [isEditing, setIsEditing] = useState(false)
 
-	// Plantilla inicial de comentarios
+	// Estado local para el formulario
 	const [data, setData] = useState({
 		usuario: "",
 		opinion: "",
 		categoria: "",
 		valoracion: ""
 	})
+
+	// Campos que pasaremos a GenericForm
 	const fields = [
 		{ key: "usuario", label: "Usuario:", type: "text" },
 		{ key: "opinion", label: "Opinión:", type: "text" },
@@ -32,36 +33,27 @@ const Show = () => {
 		{ key: "valoracion", label: "Valoración:", type: "number" }
 	]
 
-	// Actualizar los campos en estado local
+	// Actualizar estado al cambiar inputs
 	const handleChange = (field, value) => {
-		setData((prev) => ({
-			...prev,
-			[field]: value
-		}))
+		setData((prev) => ({ ...prev, [field]: value }))
 	}
+
+	// Guardar cambios -> PATCH al backend
 	const handleSave = async () => {
-		// console.log(data)
-		const res = await sendRequest(
-			'PATCH',
-			`/comments/${id}`,
-			data
-		)
+		const res = await sendRequest('PATCH', `/comments/${id}`, data)
 		if (res.success) navigate('/comments')
 		else alert(res.message)
 	}
 
+	// Traer comentario desde el backend
 	const getComment = async () => {
-		// console.log(data)
-		const res = await sendRequest(
-			'GET',
-			`/comments/${id}`
-		)
+		const res = await sendRequest('GET', `/comments/${id}`)
 		if (res.success) setData(res.data)
 		else alert(res.message)
 	}
 
 	useEffect(() => {
-		getComment()
+		getComment() // obtener datos al montar componente
 	}, [])
 
 	return (
@@ -73,8 +65,8 @@ const Show = () => {
 				fields={fields}
 				onBack={() => navigate("/comments")}
 				onSave={handleSave}
-				isEditing={isEditing}
-				onEdit={() => setIsEditing(true)}
+				isEditing={isEditing}     // editable solo si clicas Editar
+				onEdit={() => setIsEditing(true)} // activar edición
 			/>
 		</div>
 	)

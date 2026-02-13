@@ -1,20 +1,45 @@
 const userController = require("../controllers/user.controller")
 const express = require("express")
 const router = express.Router()
-//JWT: Proteger rutas
-const { protect } = require("../middlewares/jwt.mw") //Opción A
-//const jwtMW = require("../middlewares/jwt.mw") //Opción B
+
+// ===============================
+// JWT Middleware
+// ===============================
+
+// protect → verifica si el usuario está autenticado
+const { protect } = require("../middlewares/jwt.mw")
+
+// restrictTo → controla roles (AUTORIZACIÓN)
 const { restrictTo } = require("../middlewares/profile.mw")
 
-//Listar todos los usuarios
-router.get("/",protect,userController.getAllUsers) //Opción A
-//router.get("/",jwtMW.protect,userController.getAllUsers) //Opción B
-router.get("/:id",protect,restrictTo("ADMIN"),userController.getUserById)
+// ===============================
+// RUTAS PROTEGIDAS
+// ===============================
 
-//Crear/Registrar un nuevo usuario
-router.post("/",userController.registerUser)
-//Login
-router.post("/login",userController.loginUser)
+// GET todos los usuarios
+// protect → solo usuarios autenticados pueden acceder
+router.get("/", protect, userController.getAllUsers)
 
-//Exportar rutas
+// GET usuario por ID
+// protect → debe estar autenticado
+// restrictTo("ADMIN") → solo ADMIN puede acceder
+router.get("/:id", protect, restrictTo("ADMIN"), userController.getUserById)
+
+// ===============================
+// AUTENTICACIÓN
+// ===============================
+
+// Registro de usuario
+// Aquí normalmente:
+// - Se encripta password con bcrypt
+// - Se guarda en MongoDB
+router.post("/", userController.registerUser)
+
+// Login
+// Aquí normalmente:
+// - Se compara password con bcrypt.compare()
+// - Se genera JWT
+// - Se devuelve token (o cookie HttpOnly)
+router.post("/login", userController.loginUser)
+
 module.exports = router

@@ -2,29 +2,23 @@ const commentController = require("../controllers/comment.controller")
 const express = require("express")
 const router = express.Router()
 
-//Mostrar VISTA EJS index.ejs con listado de comentarios
-router.get("/",commentController.findAllComments)
+// ===============================
+// CRUD API REST
+// ===============================
 
-//Buscar Comentarios filtrados por Usuario
-router.get("/usuario",commentController.findCommentByUser)
+// GET → Listar comentarios
+router.get("/", commentController.getAllComments)
 
-//Mostrar vista EJS new.ejs para crear un comentario
-router.get("/new",commentController.showNewComment)
-//POST - Crear comentario
-router.post("/",commentController.createComment)
+// GET → Obtener comentario por ID
+router.get("/:id", commentController.getCommentById)
 
-//Mostrar vista EJS show.ejs con detalles de un comentario
-router.get("/:id",commentController.findCommentById)
+// POST → Crear comentario
+router.post("/", commentController.newComment)
 
-//Mostrar vista EJS edit.ejs para editar un comentario
-router.get("/:id/edit",commentController.showEditComment)
-//PATCH - Updatear un comentario
-router.patch("/:id",commentController.editComment)
+// PATCH → Actualizar parcialmente comentario
+router.patch("/:id", commentController.editCommentById)
 
-//DELETE - Borrar un comentario
-router.delete("/:id",commentController.deleteComment)
+// DELETE → Eliminar comentario
+router.delete("/:id", commentController.deleteCommentById)
 
-
-
-//Exportar rutas
 module.exports = router

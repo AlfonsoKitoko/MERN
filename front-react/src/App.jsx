@@ -9,23 +9,22 @@ import useCategoriaStore from './stores/CategoriaStore'
 import { useEffect } from 'react'
 
 function App() {
-	// Javascript
-	// hooks
+	// Hook para cargar categorías al iniciar la app
 	const cargarCategorias = useCategoriaStore(state => state.cargarCategorias)
 
-	useEffect(() => { cargarCategorias() }, [])
-	// HTML "tuneado"
+	useEffect(() => { cargarCategorias() }, []) // Cargar categorías al montar la app
+
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path='/' element={<Login />} />
-				<Route path='/users' element={<IndexUsers />} />
-				<Route path='/comments' element={<IndexComments />} />
-				<Route path='/comments/new' element={<NewComment />} />
-				<Route path='/comments/:id' element={<ShowComment />} />
-				<Route path='*' element={<Login />} />
+				<Route path='/' element={<Login />} />            {/* Página de login */}
+				<Route path='/users' element={<IndexUsers />} />  {/* Listado de usuarios */}
+				<Route path='/comments' element={<IndexComments />} /> {/* Listado de comentarios */}
+				<Route path='/comments/new' element={<NewComment />} /> {/* Crear comentario */}
+				<Route path='/comments/:id' element={<ShowComment />} /> {/* Mostrar comentario */}
+				<Route path='*' element={<Login />} />            {/* Ruta fallback */}
 			</Routes>
-		</BrowserRouter >
+		</BrowserRouter>
 	)
 }
 

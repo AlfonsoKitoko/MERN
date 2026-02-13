@@ -5,13 +5,16 @@ import { sendRequest } from "../../utils/functions"
 
 const New = () => {
 	const navigate = useNavigate()
-	// Plantilla inicial de comentarios
+
+	// Estado local para el formulario
 	const [data, setData] = useState({
 		usuario: "",
 		opinion: "",
 		categoria: "",
 		valoracion: ""
 	})
+
+	// Campos que pasaremos a GenericForm
 	const fields = [
 		{ key: "usuario", label: "Usuario:" },
 		{ key: "opinion", label: "Opinión:" },
@@ -19,30 +22,23 @@ const New = () => {
 			key: "categoria",
 			label: "Categoría:",
 			type: "select",
-			options: categorias,
+			options: categorias,      // viene del store de categorías
 			optionValue: "_id",
 			optionLabel: "nombre"
 		},
 		{ key: "valoracion", label: "Valoración:" }
 	]
 
-	// Actualizar los campos en estado local
+	// Actualizar estado al cambiar inputs
 	const handleChange = (field, value) => {
-		setData((prev) => ({
-			...prev,
-			[field]: value
-		}))
+		setData((prev) => ({ ...prev, [field]: value }))
 	}
 
+	// Guardar el comentario -> POST al backend
 	const handleSave = async () => {
-		// console.log(data)
-		const res = await sendRequest(
-			'POST',
-			'/comments',
-			data
-		)
-		if (res.success) navigate('/comments')
-		else alert(res.message)
+		const res = await sendRequest('POST', '/comments', data)
+		if (res.success) navigate('/comments') // volver al listado
+		else alert(res.message)               // mostrar error si falla
 	}
 
 	return (
@@ -54,7 +50,7 @@ const New = () => {
 				onChange={handleChange}
 				onBack={() => navigate("/comments")}
 				onSave={handleSave}
-				isEditing={true}
+				isEditing={true} // formulario editable
 			/>
 		</div>
 	)
